@@ -7,17 +7,17 @@ const url = "mongodb://localhost:27017/bbdd";
 //CONEXION CON  callbacks
 
 
-/*
+
 mongo.connect(url, function(err,db){
     
     if(err){
         console.log(err);
         return;
     }
-    console.log("connectado a base de datos : "+db.s.options.dbName);
+    console.log("connectado a base de datos 1: "+db.s.options.dbName);
     
  
-});*/
+});
 //CONEXION CON promesas
 
 
@@ -28,7 +28,7 @@ console.log(conexion);
 conexion
 .then(
     (db)=>{
-        console.log("connectado a base de datos : "+db.s.options.dbName);
+        console.log("connectado a base de datos 2: "+db.s.options.dbName);
     }
 )
 .catch((err)=>{
