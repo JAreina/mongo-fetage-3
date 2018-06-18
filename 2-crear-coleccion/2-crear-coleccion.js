@@ -49,7 +49,13 @@ mongo.connect(url, function(err,client){
             console.log("UPDATE ONE ")
         })
 
-        
+        bicis.findOne({"d":24},(err,r)=>{
+            if(err){
+                console.log(err);
+                return;
+            }
+                console.log(r);
+        })
     
 });
 //CONEXION CON promesas
