@@ -16,7 +16,7 @@ mongo.connect(url, function(err,db){
     }
     console.log("connectado a base de datos 1: "+db.s.options.dbName);
     
- 
+    db.close();
 });
 //CONEXION CON promesas
 
@@ -29,6 +29,7 @@ conexion
 .then(
     (db)=>{
         console.log("connectado a base de datos 2: "+db.s.options.dbName);
+        db.close();
     }
 )
 .catch((err)=>{
