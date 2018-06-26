@@ -38,9 +38,40 @@ exports.buscarPorLoginYPassword = function(login, pw){
 
 exports.insertar = function(usuario){
 
+    if( typeof usuario._id != 'undefined' ){
+
+         return new Promise(function(resolve,reject){
+            reject( { status: 400, texto: 'No se puede insertar con _id' });
+         })
+           
+    }
+
+    if ( !usuario.nombre || usuario.nombre.trim()=='' ||
+         !usuario.login  || usuario.login.trim()==''  ||
+         !usuario.pw     || usuario.pw.trim()=='' ){
+
+            return new Promise(function(resolve,reject){
+                reject( { status: 400, texto: 'datos incorrectos' });
+             })
+            
+    }
 
     let user = new Usuario(usuario);
-    user.save()
+
+    // devuelve promesa 
+
+
+    return new Promise(function(resolve,reject){
+        user.save()
+        .then(
+            rs =>{
+                resolve( { status: 200, texto:'Usuario insertado' });
+            }
+        ).catch(error => { 
+            reject({ status: 500, texto: 'Ay mamá' });
+        });
+    })
+   
    /* let promesa = new Promise( function( resolve, reject ){
         
         if( typeof usuario._id != 'undefined' ){
