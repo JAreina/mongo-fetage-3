@@ -23,6 +23,7 @@ function buscarPorLoginYPassword(request, response){
     //en la peticion, se obtiene de la bb.dd el usuario y se guarda en 
     //el request
     let usuario = request.usuario;
+    console.log(usuario)
     response.json(usuario);
 }
 

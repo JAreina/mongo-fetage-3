@@ -1,5 +1,5 @@
 let mongo = require("mongodb");
-let Usuario = require("../entidades/usuario.js");
+let Usuario = require("../entidades/usuario.js").Usuario;
 
 /*
 mongoDBUtil.conectar()
@@ -18,6 +18,22 @@ mongoDBUtil.conectar()
 
 exports.buscarPorLoginYPassword = function(login, pw){    
     
+    return new Promise( function( resolve, reject ){
+        //let obj = new Usuario ()
+      Usuario.findOne({ login:login, pw:pw })
+      .then( datos => { 
+          console.log(datos)
+        if( datos!=null){
+            resolve(datos) 
+        } else {
+            reject( { status:404, texto:'Credenciales incorrectas' } );
+        }
+    } )
+    .catch( error => { 
+        reject( { status:500, texto:'Nos hemos marcado un padre Carras' } );
+    } );  
+    });
+    /*
     let promesa = new Promise( function( resolve, reject ){
         let bbdd = mongoDBUtil.getConexion();
         bbdd.collection("usuarios").findOne( { login:login, pw:pw } )
@@ -33,7 +49,7 @@ exports.buscarPorLoginYPassword = function(login, pw){
         } );    
     });    
     return promesa;
-
+*/
 }
 
 exports.insertar = function(usuario){

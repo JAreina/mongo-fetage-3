@@ -41,24 +41,25 @@ let usuario = new Usuario()
 
 usuario._id= new mongoose.Types.ObjectId;
 usuario.nombre = "aaaaJuandddd";
+usuario.login="looginnn";
 usuario.pw = "xxxbbbbbaaaaa";
 
 // save devuelve promesa o se pasa un callback
-usuario.save()
-console.log(usuario)
+//usuario.save()
+//console.log(usuario)
 
 
 
 
 let insertar = function(usuario){
 
-    if( typeof usuario._id != 'undefined' ){
+   /* if( typeof usuario._id != 'undefined' ){
 
          return new Promise(function(resolve,reject){
             reject( { status: 400, texto: 'No se puede insertar con _id' });
          })
            
-    }
+    }*/
 
     if ( !usuario.nombre || usuario.nombre.trim()=='' ||
          !usuario.login  || usuario.login.trim()==''  ||
@@ -117,4 +118,47 @@ let insertar = function(usuario){
 */
 }
 
-insertar(usuario).then(ok => console.log("insertado")).catch(err => console.log(err))
+//insertar(usuario).then(ok => console.log("insertado")).catch(err => console.log(err))
+
+
+
+
+
+buscarPorLoginYPassword = function(login, pw){    
+    
+    return new Promise( function( resolve, reject ){
+
+        let obj = new Usuario ({ login:login, pw:pw })
+      Usuario.findOne(obj)
+      .then( datos => { 
+          //console.log(datos)
+        if( datos!=null){
+            resolve(datos) 
+        } else {
+            reject( { status:404, texto:'Credenciales incorrectas' } );
+        }
+    } )
+    .catch( error => { 
+        reject( { status:500, texto:'Nos hemos marcado un padre Carras',error: error } );
+    } );  
+    });
+    /*
+    let promesa = new Promise( function( resolve, reject ){
+        let bbdd = mongoDBUtil.getConexion();
+        bbdd.collection("usuarios").findOne( { login:login, pw:pw } )
+        .then( datos => { 
+            if( datos!=null){
+                resolve(datos) 
+            } else {
+                reject( { status:404, texto:'Credenciales incorrectas' } );
+            }
+        } )
+        .catch( error => { 
+            reject( { status:500, texto:'Nos hemos marcado un padre Carras' } );
+        } );    
+    });    
+    return promesa;
+*/
+}
+buscarPorLoginYPassword({login:"looginnn",pw: "xxxbbbbbaaaaa"})
+.then(ok => console.log("encontrado")).catch(err => console.log(err))
