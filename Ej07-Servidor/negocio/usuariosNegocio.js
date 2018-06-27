@@ -33,6 +33,9 @@ exports.buscarPorLoginYPassword = function(login, pw){
         reject( { status:500, texto:'Nos hemos marcado un padre Carras' } );
     } );  
     });
+
+
+    
     /*
     let promesa = new Promise( function( resolve, reject ){
         let bbdd = mongoDBUtil.getConexion();
