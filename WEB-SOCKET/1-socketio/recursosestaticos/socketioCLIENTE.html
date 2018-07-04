@@ -53,9 +53,13 @@
        socket.on('connect', function(){
            socket.emit("identificador", identificador )
        });
+
+        socket.on('escribe algo', aviso);
     
     }
-
+  function aviso(aviso){
+     console.log( aviso)
+  }
 
     function desconectar(){
            socket.disconnect();

@@ -14,6 +14,14 @@ server.listen(23999, ()=>
 
   io.on("connection",(socket)=>{
      
+           socket.enviarAviso = function(){
+               console.log(this)
+               this.emit("escribe algo", "escribe algo");
+           }
+
+
+           let idTimer = setTimeout(socket.enviarAviso,1000);
+
         console.log("cliente conectado::::::: "+ socket.id);
          
         socket.on('identificador', identificador =>{
