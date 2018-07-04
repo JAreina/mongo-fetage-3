@@ -7,4 +7,4 @@ let server = http.createServer(app);
 let io = socketio(server);
 
 
-
+server.listen(23999, ()=>console.log("espero conexiones"));
