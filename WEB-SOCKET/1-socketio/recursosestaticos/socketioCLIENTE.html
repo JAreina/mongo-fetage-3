@@ -19,9 +19,18 @@
      <input type="button" value="Desconectar" id="btnDesconectar">
 
 
-<script>
-  let  socket;
 
+     <h1>mensaje</h1>
+     <input type="text" name="txtMensaje" id="txtMensaje">
+     <input type="button" value="Enviar" id="btnEnviar">
+
+   <h2>MENSAJES </h2>
+   <div name="mensajes" id="mensajes" ></div>
+<script>
+  let  socket = null;
+
+    
+   
     function conectar(){
 
          let identificador = $('#txtIdentificador').val();
@@ -35,32 +44,47 @@
 
 
        socket = io.connect('http://localhost:23999',{reconnection: false});
-      
+       
+       // disparador eventos para recibir mensajes
+       socket.on('mensajes', recibirMensaje);
 
 
     // ya connectado evento 
        socket.on('connect', function(){
            socket.emit("identificador", identificador )
-       })
-       
-
-      
-     
+       });
+    
     }
 
 
     function desconectar(){
-
+           socket.disconnect();
     }
 
-    
+    function enviar(){
+      let mensaje = $('#txtMensaje').val();
+      if(mensaje.trim == ''){
+               alert("mensaje vacio ");
+                return;
+          }
+          socket.emit("mensaje", mensaje )
+    }
 
+     function recibirMensaje(mensajes){
+             console.log(mensajes)       
+            console.log(typeof mensajes.hora)
 
+            let g = mensajes.hora.indexOf('G');
+            let hor = mensajes.hora.substring(0,g);
+          $('#mensajes').append(hor+ " : " +mensajes.id + " : "+ mensajes.mensaje +"<br>")
+      
+     }
 
 
     function inicializar(){
            $('#btnConectar').click(conectar);
            $('#btnDesconectar').click(desconectar);
+           $('#btnEnviar').click(enviar);
     }
     
 

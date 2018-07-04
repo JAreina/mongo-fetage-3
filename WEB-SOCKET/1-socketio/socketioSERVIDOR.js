@@ -13,12 +13,27 @@ server.listen(23999, ()=>
 
 
   io.on("connection",(socket)=>{
+     
         console.log("cliente conectado::::::: "+ socket.id);
          
         socket.on('identificador', identificador =>{
+            socket.idd = identificador;
+            if(identificador)
             console.log(socket.id +" ............."+identificador)
         })
+        socket.on('mensaje', mensaje =>{
+            console.log(socket.id +" ............."+mensaje)
+              
 
+            // reenviar a todos los sockets  con io 
+            io.emit('mensajes',{id: socket.idd, mensaje: mensaje, 
+                hora: `${new Date().toTimeString()}`})
+        })
+
+
+        socket.on('disconnect', desconectado =>{
+            console.log(socket.idd + ":  "  +desconectado)
+        })
   });
 
  
